@@ -1,7 +1,7 @@
 import pygame
 
 pygame.init()
-size = width, height = 900, 900
+size = width, height = 600, 700
 screen = pygame.display.set_mode(size)
 
 
@@ -17,7 +17,7 @@ class Board:
 
         self.left = 0
         self.top = 0
-        self.cell_size = 30
+        self.cell_size = 20
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -42,6 +42,8 @@ class Board:
                 # pygame.draw.rect(screen, (255, 255, 255),
                 #                  (self.left + i * self.cell_size, self.top + j * self.cell_size,
                 #                   self.cell_size, self.cell_size), 1)
+                pygame.draw.rect(screen, (255, 255, 255), (0, 600, 600, 100), 1)
+                # get_record()
 
     def get_cell(self, mouse_pos):
         try:
