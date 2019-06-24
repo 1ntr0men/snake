@@ -6,7 +6,6 @@ pygame.init()
 size = width, height = 600, 700
 fps = 10
 score = 0
-screen = pygame.display.set_mode(size)
 
 with open("Cookie.txt", "r") as cookie:
     record = "".join(list(cookie.read().split("\n")[0])[7:])
@@ -53,7 +52,12 @@ class Snake(Board):
             self.direction = direction
 
     def eat(self):
-        self.board[randint(1, 29)][randint(1, 29)] = -1
+        l1 = randint(1, 29)
+        l2 = randint(1, 29)
+        while self.board[l1][l2] != 0:
+            l1 = randint(1, 29)
+            l2 = randint(1, 29)
+        self.board[l1][l2] = -1
 
     def death(self):
         sys.exit()

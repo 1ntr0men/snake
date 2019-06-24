@@ -14,10 +14,18 @@ class Board:
         self.width = width
         self.height = height
         self.board = [[0] * width for _ in range(height)]
-
+        # self.board[0][0] = -2
         self.left = 0
         self.top = 0
         self.cell_size = 20
+
+    def reader(self, text):
+        self.board = text
+
+    def level_get(self, n):
+        name = str("level" + n)
+        with open(name, "r") as l:
+            return l.read().split("\n")
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -32,9 +40,24 @@ class Board:
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
                                       self.cell_size, self.cell_size), 0)
                 elif self.board[j][i] == -1:
-                    pygame.draw.rect(screen, (255, 0, 0),
+                    pygame.draw.circle(screen, (255, 0, 0),
+                                       (i * self.cell_size + self.cell_size // 2,
+                                        j * self.cell_size + self.cell_size // 2),
+                                       self.cell_size // 2)
+                elif self.board[j][i] == -2:
+                    pygame.draw.rect(screen, (222, 163, 100),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
                                       self.cell_size, self.cell_size), 0)
+                    pygame.draw.line(screen, (0, 0, 0),
+                                     [i * self.cell_size,
+                                      j * self.cell_size],
+                                     [self.cell_size + i * self.cell_size,
+                                      self.cell_size + j * self.cell_size], 3)
+                    pygame.draw.line(screen, (0, 0, 0),
+                                     [self.cell_size + i * self.cell_size,
+                                      j * self.cell_size],
+                                     [i * self.cell_size,
+                                      self.cell_size + j * self.cell_size], 3)
                 else:
                     pygame.draw.rect(screen, (0, 255, 0),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
