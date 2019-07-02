@@ -1,4 +1,5 @@
 from board import *
+from menu import *
 from random import randint
 import sys
 
@@ -9,6 +10,10 @@ score = 0
 
 with open("Cookie.txt", "r") as cookie:
     record = "".join(list(cookie.read().split("\n")[0])[7:])
+
+
+def terminate():
+    sys.exit()
 
 
 def get_record():
@@ -43,15 +48,16 @@ class Snake(Board):
         self.direction = 3  # вправо-3 вниз-6 влево-9 вверх-12
 
     def spawn(self):
-        for i in range(self.length):
+        for i in range(1, self.length):
             self.board[self.y_start][self.x_start - i] = i + 1
-        self.board[3][3] = -1
+        self.board[self.y_start][self.x_start] = 1.1
+        self.spawn_eat()
 
-    def drtn(self, direction):
+    def drtn(self, direction):  # проверка направления
         if direction + self.direction != 12 and direction + self.direction != 18:
             self.direction = direction
 
-    def eat(self):
+    def spawn_eat(self):
         l1 = randint(1, 29)
         l2 = randint(1, 29)
         while self.board[l1][l2] != 0:
@@ -59,68 +65,74 @@ class Snake(Board):
             l2 = randint(1, 29)
         self.board[l1][l2] = -1
 
-    def death(self):
-        sys.exit()
-
     def move(self):
         head = [15, 15]
         tail = [0, 0]
-        l = False
+        l = False  # переменная отвечает за разрешение на удаление последней клетки змейки
         global score
-        for i in range(len(self.board)):
-            if 1 in self.board[i]:
-                head[0] = self.board[i].index(1)
+
+        for i in range(len(self.board)):  # создание головы и хвоста как переменных
+            if 1.1 in self.board[i]:
+                head[0] = self.board[i].index(1.1)
                 head[1] = i
-            if self.length in self.board[i]:
+            elif 1.2 in self.board[i]:
+                head[0] = self.board[i].index(1.2)
+                head[1] = i
+            if self.length in self.board[i]:  # удлиннение змейки
                 tail[0] = self.board[i].index(self.length) - 1
                 tail[1] = i
             for j in range(len(self.board[i])):
                 if self.board[i][j] > 0:
                     self.board[i][j] += 1
-        if self.direction == 3:
+                    self.board[i][j] = int(self.board[i][j])
+
+        if self.direction == 3:  # вправо
             if self.board[head[1] % 30][(head[0] + 1) % 30] == -1:
-                self.eat()
+                self.spawn_eat()
                 self.length += 1
                 score += 10
                 self.check_score(score)
                 self.check_record()
                 l = True
             elif self.board[(head[1]) % 30][(head[0] + 1) % 30] != 0:
-                self.death()
-            self.board[head[1] % 30][(head[0] + 1) % 30] = 1
-        elif self.direction == 6:
+                terminate()
+            self.board[head[1] % 30][(head[0] + 1) % 30] = 1.1
+
+        elif self.direction == 6:  # вниз
             if self.board[(head[1] - 1) % 30][head[0] % 30] == -1:
-                self.eat()
+                self.spawn_eat()
                 self.length += 1
                 score += 10
                 self.check_score(score)
                 self.check_record()
                 l = True
             elif self.board[(head[1] - 1) % 30][head[0] % 30] != 0:
-                self.death()
-            self.board[(head[1] - 1) % 30][head[0] % 30] = 1
-        elif self.direction == 9:
+                terminate()
+            self.board[(head[1] - 1) % 30][head[0] % 30] = 1.2
+
+        elif self.direction == 9:  # влево
             if self.board[head[1] % 30][(head[0] - 1) % 30] == -1:
-                self.eat()
+                self.spawn_eat()
                 self.length += 1
                 score += 10
                 self.check_score(score)
                 self.check_record()
                 l = True
             elif self.board[head[1] % 30][(head[0] - 1) % 30] != 0:
-                self.death()
-            self.board[head[1] % 30][(head[0] - 1) % 30] = 1
-        elif self.direction == 12:
+                terminate()
+            self.board[head[1] % 30][(head[0] - 1) % 30] = 1.1
+
+        elif self.direction == 12:  # вверх
             if self.board[(head[1] + 1) % 30][head[0] % 30] == -1:
-                self.eat()
+                self.spawn_eat()
                 self.length += 1
                 score += 10
                 self.check_score(score)
                 self.check_record()
                 l = True
             elif self.board[(head[1] + 1) % 30][head[0] % 30] != 0:
-                self.death()
-            self.board[(head[1] + 1) % 30][head[0] % 30] = 1
+                terminate()
+            self.board[(head[1] + 1) % 30][head[0] % 30] = 1.2
         if not l:
             self.board[tail[1]][tail[0] + 1] = 0
 
@@ -140,8 +152,9 @@ class Snake(Board):
 
 snk = Snake(30, 30)
 running = True
-r = False
+# r = False
 clock = pygame.time.Clock()
+start_menu()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

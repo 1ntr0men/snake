@@ -3,6 +3,7 @@ import pygame
 pygame.init()
 size = width, height = 600, 700
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Змейка")
 
 
 class NotBoardCoord(Exception):
@@ -58,15 +59,31 @@ class Board:
                                       j * self.cell_size],
                                      [i * self.cell_size,
                                       self.cell_size + j * self.cell_size], 3)
+                elif self.board[j][i] == 1.1:  # по горизонтали
+                    pygame.draw.rect(screen, (0, 255, 0),
+                                     (self.left + i * self.cell_size, self.top + j * self.cell_size,
+                                      self.cell_size, self.cell_size), 0)
+                    pygame.draw.rect(screen, (255, 255, 255),  # глаз верхний
+                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size,
+                                      7, 7), 0)
+                    pygame.draw.rect(screen, (255, 255, 255),  # глаз нижний
+                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size + 13,
+                                      7, 7), 0)
+                elif self.board[j][i] == 1.2:  # по вертикали
+                    pygame.draw.rect(screen, (0, 255, 0),
+                                     (self.left + i * self.cell_size, self.top + j * self.cell_size,
+                                      self.cell_size, self.cell_size), 0)
+                    pygame.draw.rect(screen, (255, 255, 255),  # глаз левый
+                                     (self.left + i * self.cell_size, self.top + j * self.cell_size + 10,
+                                      7, 7), 0)
+                    pygame.draw.rect(screen, (255, 255, 255),  # глаз правый
+                                     (self.left + i * self.cell_size + 13, self.top + j * self.cell_size + 10,
+                                      7, 7), 0)
                 else:
                     pygame.draw.rect(screen, (0, 255, 0),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
                                       self.cell_size, self.cell_size), 0)
-                # pygame.draw.rect(screen, (255, 255, 255),
-                #                  (self.left + i * self.cell_size, self.top + j * self.cell_size,
-                #                   self.cell_size, self.cell_size), 1)
                 pygame.draw.rect(screen, (255, 255, 255), (0, 600, 600, 100), 1)
-                # get_record()
 
     def get_cell(self, mouse_pos):
         try:
