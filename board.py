@@ -59,26 +59,46 @@ class Board:
                                       j * self.cell_size],
                                      [i * self.cell_size,
                                       self.cell_size + j * self.cell_size], 3)
-                elif self.board[j][i] == 1.1:  # по горизонтали
+                elif self.board[j][i] == 1.3:  # скин вправо
                     pygame.draw.rect(screen, (0, 255, 0),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
                                       self.cell_size, self.cell_size), 0)
-                    pygame.draw.rect(screen, (255, 255, 255),  # глаз верхний
-                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size,
-                                      7, 7), 0)
-                    pygame.draw.rect(screen, (255, 255, 255),  # глаз нижний
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз верхний
+                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size + 2,
+                                      5, 5), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз нижний
                                      (self.left + i * self.cell_size + 3, self.top + j * self.cell_size + 13,
-                                      7, 7), 0)
-                elif self.board[j][i] == 1.2:  # по вертикали
+                                      5, 5), 0)
+                elif self.board[j][i] == 1.9:  # скин влево
                     pygame.draw.rect(screen, (0, 255, 0),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,
                                       self.cell_size, self.cell_size), 0)
-                    pygame.draw.rect(screen, (255, 255, 255),  # глаз левый
-                                     (self.left + i * self.cell_size, self.top + j * self.cell_size + 10,
-                                      7, 7), 0)
-                    pygame.draw.rect(screen, (255, 255, 255),  # глаз правый
-                                     (self.left + i * self.cell_size + 13, self.top + j * self.cell_size + 10,
-                                      7, 7), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз верхний
+                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size + 2,
+                                      5, 5), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз нижний
+                                     (self.left + i * self.cell_size + 3, self.top + j * self.cell_size + 13,
+                                      5, 5), 0)
+                elif self.board[j][i] == 1.12:  # скин вверх
+                    pygame.draw.rect(screen, (0, 255, 0),
+                                     (self.left + i * self.cell_size, self.top + j * self.cell_size,
+                                      self.cell_size, self.cell_size), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз левый
+                                     (self.left + i * self.cell_size + 2, self.top + j * self.cell_size + 12,
+                                      5, 5), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз правый
+                                     (self.left + i * self.cell_size + 13, self.top + j * self.cell_size + 12,
+                                      5, 5), 0)
+                elif self.board[j][i] == 1.6:  # скин вниз
+                    pygame.draw.rect(screen, (0, 255, 0),
+                                     (self.left + i * self.cell_size, self.top + j * self.cell_size,
+                                      self.cell_size, self.cell_size), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз левый
+                                     (self.left + i * self.cell_size + 2, self.top + j * self.cell_size + 3,
+                                      5, 5), 0)
+                    pygame.draw.rect(screen, (0, 0, 0),  # глаз правый
+                                     (self.left + i * self.cell_size + 13, self.top + j * self.cell_size + 3,
+                                      5, 5), 0)
                 else:
                     pygame.draw.rect(screen, (0, 255, 0),
                                      (self.left + i * self.cell_size, self.top + j * self.cell_size,

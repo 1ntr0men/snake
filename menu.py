@@ -7,7 +7,7 @@ r = 0
 g = 0
 b = 0
 clock = pygame.time.Clock()
-fps = 30
+fps = 50
 
 
 def terminate():

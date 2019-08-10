@@ -50,7 +50,7 @@ class Snake(Board):
     def spawn(self):
         for i in range(1, self.length):
             self.board[self.y_start][self.x_start - i] = i + 1
-        self.board[self.y_start][self.x_start] = 1.1
+        self.board[self.y_start][self.x_start] = 1.3
         self.spawn_eat()
 
     def drtn(self, direction):  # проверка направления
@@ -66,17 +66,23 @@ class Snake(Board):
         self.board[l1][l2] = -1
 
     def move(self):
-        head = [15, 15]
+        head = [0, 0]
         tail = [0, 0]
         l = False  # переменная отвечает за разрешение на удаление последней клетки змейки
         global score
 
         for i in range(len(self.board)):  # создание головы и хвоста как переменных
-            if 1.1 in self.board[i]:
-                head[0] = self.board[i].index(1.1)
+            if 1.3 in self.board[i]:
+                head[0] = self.board[i].index(1.3)
                 head[1] = i
-            elif 1.2 in self.board[i]:
-                head[0] = self.board[i].index(1.2)
+            elif 1.6 in self.board[i]:
+                head[0] = self.board[i].index(1.6)
+                head[1] = i
+            elif 1.9 in self.board[i]:
+                head[0] = self.board[i].index(1.9)
+                head[1] = i
+            elif 1.12 in self.board[i]:
+                head[0] = self.board[i].index(1.12)
                 head[1] = i
             if self.length in self.board[i]:  # удлиннение змейки
                 tail[0] = self.board[i].index(self.length) - 1
@@ -96,7 +102,7 @@ class Snake(Board):
                 l = True
             elif self.board[(head[1]) % 30][(head[0] + 1) % 30] != 0:
                 terminate()
-            self.board[head[1] % 30][(head[0] + 1) % 30] = 1.1
+            self.board[head[1] % 30][(head[0] + 1) % 30] = 1.3
 
         elif self.direction == 6:  # вниз
             if self.board[(head[1] - 1) % 30][head[0] % 30] == -1:
@@ -108,7 +114,7 @@ class Snake(Board):
                 l = True
             elif self.board[(head[1] - 1) % 30][head[0] % 30] != 0:
                 terminate()
-            self.board[(head[1] - 1) % 30][head[0] % 30] = 1.2
+            self.board[(head[1] - 1) % 30][head[0] % 30] = 1.6
 
         elif self.direction == 9:  # влево
             if self.board[head[1] % 30][(head[0] - 1) % 30] == -1:
@@ -120,7 +126,7 @@ class Snake(Board):
                 l = True
             elif self.board[head[1] % 30][(head[0] - 1) % 30] != 0:
                 terminate()
-            self.board[head[1] % 30][(head[0] - 1) % 30] = 1.1
+            self.board[head[1] % 30][(head[0] - 1) % 30] = 1.9
 
         elif self.direction == 12:  # вверх
             if self.board[(head[1] + 1) % 30][head[0] % 30] == -1:
@@ -132,7 +138,7 @@ class Snake(Board):
                 l = True
             elif self.board[(head[1] + 1) % 30][head[0] % 30] != 0:
                 terminate()
-            self.board[(head[1] + 1) % 30][head[0] % 30] = 1.2
+            self.board[(head[1] + 1) % 30][head[0] % 30] = 1.12
         if not l:
             self.board[tail[1]][tail[0] + 1] = 0
 
@@ -152,7 +158,6 @@ class Snake(Board):
 
 snk = Snake(30, 30)
 running = True
-# r = False
 clock = pygame.time.Clock()
 start_menu()
 while running:
